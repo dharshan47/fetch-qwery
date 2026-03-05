@@ -1,0 +1,275 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary-600: #18181b;
+  --color-primary-700: #09090b;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground selection:bg-secondary selection:text-secondary-foreground;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+@layer utilities {
+  .animate-gradient {
+    background: linear-gradient(-45deg, #2563eb, #7c3aed, #db2777, #2563eb);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  .retro-shadow {
+    box-shadow: 6px 6px 0px 0px rgba(var(--primary-rgb), 1);
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .retro-shadow:hover {
+    box-shadow: 2px 2px 0px 0px rgba(var(--primary-rgb), 1);
+    transform: translate(4px, 4px);
+  }
+
+  .retro-shadow-sm {
+    box-shadow: 4px 4px 0px 0px rgba(var(--primary-rgb), 1);
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .retro-shadow-sm:hover {
+    box-shadow: 0px 0px 0px 0px rgba(var(--primary-rgb), 1);
+    transform: translate(4px, 4px);
+  }
+
+  .retro-border {
+    @apply border-2 border-foreground dark:border-white;
+  }
+
+  .glass-card {
+    @apply bg-background border-2 border-foreground rounded-none;
+    box-shadow: 6px 6px 0px 0px rgba(var(--primary-rgb), 1);
+    transition: all 200ms ease-in-out;
+  }
+
+  .text-glow {
+    text-shadow: 2px 2px 0px rgba(var(--primary-rgb), 0.2);
+  }
+
+  /* Fumadocs Navbar Brutalist Overrides */
+  header, [data-fd-header="true"] {
+    @apply border-b-2 border-b-foreground bg-background;
+    border-bottom: 2px solid var(--foreground) !important;
+  }
+  
+  header nav > a, header nav > button, [data-fd-header="true"] a {
+    @apply transition-all duration-200;
+  }
+  
+  header nav > a:hover {
+    @apply bg-primary text-primary-foreground transform -translate-y-0.5;
+    box-shadow: 4px 4px 0px 0px rgba(var(--primary-rgb), 1);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(1deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes blob-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(80px, 40px) scale(1.2);
+  }
+
+  66% {
+    transform: translate(-20px, 60px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes blob-2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(-60px, 80px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(40px, -20px) scale(0.8);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.21, 0.47, 0.32, 0.98) forwards;
+  opacity: 0;
+}
+
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+}
+
+.delay-4 {
+  animation-delay: 0.4s;
+}
+
+.animate-blob-1 {
+  animation: blob-1 15s infinite ease-in-out;
+}
+
+.animate-blob-2 {
+  animation: blob-2 20s infinite ease-in-out;
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@theme inline {
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  /* White */
+  --foreground: oklch(0 0 0);
+  /* Black */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0.2 0 0);
+  /* Pure Dark Gray/Black */
+  --primary-rgb: 0, 0, 0;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9 0.1 80);
+  /* Bright Retro Yellow */
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.3 0 0);
+  --accent: oklch(0.7 0.2 300);
+  /* Bright Retro Purple/Pink */
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  /* Retro Red */
+  --border: oklch(0 0 0);
+  /* Black borders for brutalism */
+  --input: oklch(0 0 0);
+  --ring: oklch(0 0 0);
+  --radius: 0rem;
+  /* Hard edges for retro */
+}
+
+.dark {
+  --background: oklch(0 0 0);
+  /* Pure Black */
+  --foreground: oklch(1 0 0);
+  /* Pure White */
+  --card: oklch(0 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0 0 0);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(1 0 0);
+  --primary-rgb: 255, 255, 255;
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.9 0.1 80);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.8 0 0);
+  --accent: oklch(0.7 0.2 300);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  --border: oklch(1 0 0);
+  /* White borders for dark mode brutalism */
+  --input: oklch(1 0 0);
+  --ring: oklch(1 0 0);
+}

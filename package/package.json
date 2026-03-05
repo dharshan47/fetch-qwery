@@ -1,0 +1,69 @@
+{
+  "name": "fetch-qwery",
+  "version": "1.1.0",
+  "description": "The high-performance, lightweight data fetching solution for React and Next.js. Features intelligent caching, SWR, race-condition protection, and flicker-free UI updates.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://github.com/dharshan-m/fetch-qwery#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dharshan-m/fetch-qwery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dharshan-m/fetch-qwery/issues"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "fetch",
+    "useFetch",
+    "swr",
+    "caching",
+    "nextjs",
+    "typescript",
+    "lightweight",
+    "performance"
+  ],
+  "author": "Dharshan M",
+  "license": "MIT",
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.21"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.2.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.0",
+    "jsdom": "^26.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^3.0.7"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist --clean --minify --treeshake --external react,react-dom",
+    "lint": "tsc --noEmit",
+    "test": "cd .. && vitest run test",
+    "test:watch": "cd .. && vitest test",
+
+    "prepublishOnly": "npm run build"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "fetch-qwery-workspace",
+  "private": true,
+  "workspaces": [
+    "package",
+    "demo/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=package",
+    "test": "npm test --workspace=package",
+    "lint": "npm run lint --workspace=package",
+    "dev": "npm run dev --workspace=demo/nextjs"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.7",
+    "jsdom": "^26.0.0",
+    "@testing-library/react": "^16.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@tanstack/react-query": "^5.90.21",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "^5.9.3"
+  }
+}
+
+
+

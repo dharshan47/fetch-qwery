@@ -1,0 +1,43 @@
+---
+title: Introducing Fetch-Qwery
+description: The zero-config, ultra-fast fetch hook for React and Next.js.
+date: 2026-02-27
+---
+
+# Introducing Fetch-Qwery
+
+Fetching data in React shouldn't be a chore. We built **Fetch-Qwery** to solve the common pain points of data fetching: boilerplate, bundle size, and configuration hell.
+
+## Why Fetch-Qwery?
+
+Most fetching libraries require providers, complex setup, or add significant weight to your bundle. Fetch-Qwery is different:
+
+- **Zero Config**: No `<Provider>` needed. Just import and use.
+- **Ultra Lightweight**: Focused on performance and small footprint.
+- **SSR Ready**: Works seamlessly with Next.js and React Server Components.
+- **Modern API**: Simple, intuitive, and powerful.
+
+## How it Works
+
+```tsx
+import { useFetch } from 'fetch-qwery';
+
+function MyComponent() {
+  const { data, loading, error } = useFetch('https://api.example.com/data');
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return <div>{JSON.stringify(data)}</div>;
+}
+```
+
+## Get Started
+
+Try it today with a single command:
+
+```bash
+npm i fetch-qwery
+```
+
+Stay tuned for more updates as we continue to evolve the data fetching experience!

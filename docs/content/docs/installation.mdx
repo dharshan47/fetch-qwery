@@ -1,0 +1,39 @@
+---
+title: Installation
+description: How to install and set up fetch-qwery in your project.
+---
+
+# Installation
+
+Getting started with `fetch-qwery` is quick and easy.
+
+## 1. Install
+
+Install `fetch-qwery` using your favorite package manager.
+
+```bash
+npm install fetch-qwery
+```
+
+Alternatively, using **yarn** or **pnpm**:
+
+```bash
+# yarn
+yarn add fetch-qwery
+
+# pnpm
+pnpm add fetch-qwery
+```
+
+## 2. Use Directly
+
+That's it! You can now use `useFetch` directly in your components without any providers or configuration.
+
+```tsx
+import { useFetch } from 'fetch-qwery';
+
+function App() {
+  const { data } = useFetch('https://api.example.com/data');
+  return <div>{JSON.stringify(data)}</div>;
+}
+```

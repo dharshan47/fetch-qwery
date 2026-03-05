@@ -1,0 +1,35 @@
+---
+title: API Reference
+description: Detailed documentation for the fetch-qwery API.
+---
+
+# API Reference
+
+## `useFetch(url, options)`
+
+The primary hook for fetching data.
+
+### Parameters
+
+- `url`: `string | string[]`
+  - A single string URL for one request.
+  - An array of string URLs for parallel fetching.
+- `options`: `RequestInit` (Optional)
+  - Standard `fetch` options (method, headers, body, etc.).
+
+### Return Value
+
+The hook returns an object containing everything you need to manage the request state, powered by TanStack Query.
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `data` | `T \| undefined` | The fetched data. An array of results if multiple URLs were provided. |
+| `isLoading` | `boolean` | True if the request is in progress. |
+| `isError` | `boolean` | True if the request failed. |
+| `error` | `Error \| null` | The error object if the request failed. |
+| `isSuccess` | `boolean` | True if the request completed successfully. |
+| `refetch` | `Function` | Function to manually trigger a refetch. |
+
+### Advanced Options
+
+Under the hood, `fetch-qwery` manages its own query state. This allows for automatic deduplication and caching across different components without requiring a `QueryClientProvider`.

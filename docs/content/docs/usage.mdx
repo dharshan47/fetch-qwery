@@ -1,0 +1,68 @@
+---
+title: Basic Usage
+description: Learn how to use the useFetch hook for single and multiple requests.
+---
+
+# Basic Usage
+
+The core of `fetch-qwery` is the `useFetch` hook. It allows you to fetch data with ease, handling loading, error, and caching automatically—**without needing any providers or configuration**.
+
+## Single Request
+
+To fetch a single resource, pass the URL string as the first argument.
+
+```tsx
+import { useFetch } from 'fetch-qwery';
+
+function Profile() {
+  const { data, isLoading, isError, error } = useFetch('https://api.example.com/user');
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
+
+  return <div>Hello, {data.name}!</div>;
+}
+```
+
+## Parallel Fetching
+
+`fetch-qwery` makes it incredibly simple to fetch multiple resources at once. Just pass an **array of URLs**.
+
+```tsx
+const { data, isLoading } = useFetch([
+  '/api/user',
+  '/api/settings',
+  '/api/notifications'
+]);
+
+// 'data' will be an array containing the results of all requests
+const [user, settings, notifications] = data || [];
+```
+
+## Custom Fetch Options
+
+You can pass standard `fetch` options as the second argument.
+
+```tsx
+const { data } = useFetch('https://api.example.com/data', {
+  method: 'POST',
+  body: JSON.stringify({ key: 'value' }),
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+```
+
+## Type Safety
+
+`fetch-qwery` is built with TypeScript and supports generics for full type safety.
+
+```tsx
+interface User {
+  id: string;
+  name: string;
+}
+
+const { data } = useFetch<User>('/api/user');
+// data is typed as User | undefined
+```
