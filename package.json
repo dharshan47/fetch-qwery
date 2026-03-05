@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "package",
-    "demo/*"
+    "demo/*",
+    "docs"
   ],
   "scripts": {
     "build": "npm run build --workspace=package",
