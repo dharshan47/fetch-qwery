@@ -33,7 +33,7 @@ That's it! You can now use `useFetch` directly in your components without any pr
 import { useFetch } from 'fetch-qwery';
 
 function App() {
-  const { data } = useFetch('https://api.example.com/data');
-  return <div>{JSON.stringify(data)}</div>;
+  const { data } = useFetch('https://dummyjson.com/quotes/1');
+  return <div>{data?.quote}</div>;
 }
 ```

@@ -53,19 +53,17 @@ export function Integration() {
                     {" } "}
                     <span className="text-purple-400 italic">from</span><span className="text-emerald-500"> 'fetch-qwery'</span>;
                     {"\n\n"}
-                    <span className="text-purple-400 font-semibold italic">export default function</span> <span className="text-yellow-400 font-bold">Profile</span>() {"{\n"}
-                    {"  "}<span className="text-blue-400">const</span>{" { "}data, isLoading, error{" } = "}
-                    <span className="text-yellow-400 font-bold">useFetch</span>{"<"}
-                    <span className="text-blue-300">User</span>
-                    {">"}(<span className="text-emerald-500">'/api/user'</span>, {"{"}
-                    {"\n    "}<span className="text-blue-300">revalidate</span>: <span className="text-yellow-400">60</span>,
-                    {"\n    "}<span className="text-blue-300">suspense</span>: <span className="text-blue-400">true</span>
+                    <span className="text-purple-400 font-semibold italic">export default function</span> <span className="text-yellow-400 font-bold">Quote</span>() {"{\n"}
+                    {"  "}<span className="text-blue-400">const</span>{" { "}data: quote, loading{" } = "}
+                    <span className="text-yellow-400 font-bold">useFetch</span>{"("}
+                    <span className="text-emerald-500">'https://dummyjson.com/quotes/1'</span>, {"{"}
+                    {"\n    "}<span className="text-blue-300">staleTime</span>: <span className="text-yellow-400">60000</span>,
+                    {"\n    "}<span className="text-blue-300">select</span>: (res) {"=>"} res.quote
                     {"\n  }"});
                     {"\n\n"}
-                    {"  "}<span className="text-purple-400 font-semibold italic">if</span> (isLoading) <span className="text-purple-400 font-semibold italic">return</span> {"<"}Spinner {"/>"};
-                    {"  "}<span className="text-purple-400 font-semibold italic">if</span> (error) <span className="text-purple-400 font-semibold italic">return</span> {"<"}Error msg={"{error.message}"} {"/>"};
+                    {"  "}<span className="text-purple-400 font-semibold italic">if</span> (loading) <span className="text-purple-400 font-semibold italic">return</span> {"<"}Spinner {"/>"};
                     {"\n\n"}
-                    {"  "}<span className="text-purple-400 font-semibold italic">return</span> {"<h1>{data.name}</h1>"};
+                    {"  "}<span className="text-purple-400 font-semibold italic">return</span> {"<blockquote>{quote}</blockquote>"};
                     {"\n}"}
                   </code>
                 </pre>

@@ -1,17 +1,22 @@
 import { getPageImage, source } from '@/lib/source';
+import { type InferPageType } from 'fumadocs-core/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { generate as DefaultImage } from 'fumadocs-ui/og';
 
 export const revalidate = false;
 
-export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...slug]'>) {
+interface RouteContext {
+  params: Promise<{ slug: string[] }>;
+}
+
+export async function GET(_req: Request, { params }: RouteContext) {
   const { slug } = await params;
   const page = source.getPage(slug.slice(0, -1));
   if (!page) notFound();
 
   return new ImageResponse(
-    <DefaultImage title={page.data.title} description={page.data.description} site="My App" />,
+    <DefaultImage title={page.data.title} description={page.data.description} site="Fetch-Qwery" />,
     {
       width: 1200,
       height: 630,
@@ -20,7 +25,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
 }
 
 export function generateStaticParams() {
-  return source.getPages().map((page) => ({
+  return source.getPages().map((page: InferPageType<typeof source>) => ({
     lang: page.locale,
     slug: getPageImage(page).segments,
   }));

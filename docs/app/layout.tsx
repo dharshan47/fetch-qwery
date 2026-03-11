@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Fetch-Qwery | High-Performance Data Fetching for React",
   metadataBase: new URL("https://fetch-qwery.vercel.app"),
   description:
-    "The ultra-lightweight, type-safe, and zero-config data fetching engine for modern React engineering teams. Optimized for React 19 and Next.js 15.",
+    "The ultra-lightweight, type-safe, and zero-config data fetching engine for modern React engineering teams. Optimized for React 19 and Next.js 16.",
   keywords: [
     "react",
     "nextjs",
@@ -32,6 +32,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Fetch-Qwery | Data Fetching Perfected",
     description: "Ultra-lightweight, type-safe data fetching for React.",
+  },
+  icons: {
+    icon: "/fq.png",
+    apple: "/fq.png",
   },
 };
 

@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://fetch-qwery.vercel.app/fq.png" alt="Fetch-Qwery Logo" width="100" />
+</div>
+
 # 🚀 Fetch-Qwery
 
 **The Zero-Config, Ultra-Performance React Calling Engine.**
@@ -28,18 +32,21 @@ pnpm add fetch-qwery
 ```tsx
 import { useFetch } from "fetch-qwery";
 
-function UserProfile() {
-  const { data, loading, error } = useFetch(
-    "https://api.github.com/users/octocat",
-  );
+function ProductList() {
+  const { data: products, loading } = useFetch("https://dummyjson.com/products", {
+    select: (res) => res.products
+  });
 
-  if (loading) return <div>Loading Profile...</div>;
-  if (error) return <div>Failed to load 😭</div>;
+  if (loading) return <div>Loading Products...</div>;
 
   return (
-    <div className="profile-card hero-gradient">
-      <img src={data.avatar_url} alt={data.name} />
-      <h1>{data.name}</h1>
+    <div className="grid grid-cols-3 gap-4">
+      {products?.map(product => (
+        <div key={product.id} className="card">
+          <img src={product.thumbnail} alt={product.title} />
+          <h3>{product.title}</h3>
+        </div>
+      ))}
     </div>
   );
 }
@@ -50,15 +57,17 @@ function UserProfile() {
 Fetch-qwery fully supports complex API flows including parallel fetches, method overloads, and strict typing.
 
 ```ts
-const { data } = useFetch(
-  ["https://api.example.com/system", "https://api.example.com/alerts"],
-  {
-    staleTime: 60000,
-    keepPreviousData: true,
-    preloadImages: true,
-    autoPrefetch: true,
-  },
-);
+const { data } = useFetch([
+  "https://dummyjson.com/users/1",
+  "https://dummyjson.com/products/1"
+], {
+  staleTime: 60000,
+  baseUrl: "https://dummyjson.com",
+  preloadImages: true,
+  autoPrefetch: true,
+});
+
+// data[0] is User, data[1] is Product
 ```
 
 ---

@@ -14,55 +14,119 @@ To fetch a single resource, pass the URL string as the first argument.
 ```tsx
 import { useFetch } from 'fetch-qwery';
 
-function Profile() {
-  const { data, isLoading, isError, error } = useFetch('https://api.example.com/user');
+function Quote() {
+  const { data, isLoading, isError, error } = useFetch('https://dummyjson.com/quotes/1');
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading quote...</div>;
   if (isError) return <div>Error: {error.message}</div>;
 
-  return <div>Hello, {data.name}!</div>;
+  return (
+    <blockquote>
+      "{data.quote}"
+      <footer>— {data.author}</footer>
+    </blockquote>
+  );
 }
 ```
 
-## Parallel Fetching
+## Data Transformation with `select`
 
-`fetch-qwery` makes it incredibly simple to fetch multiple resources at once. Just pass an **array of URLs**.
+Many APIs wrap their results in nested objects (e.g., `{ "products": [...] }`). You can use the `select` option to transform the data before it's returned by the hook.
+
+This is especially useful for avoiding "map is not a function" errors when you expect an array but get an object.
 
 ```tsx
-const { data, isLoading } = useFetch([
-  '/api/user',
-  '/api/settings',
-  '/api/notifications'
-]);
+const { data: products } = useFetch('https://dummyjson.com/products', {
+  select: (data) => data.products,
+});
 
-// 'data' will be an array containing the results of all requests
-const [user, settings, notifications] = data || [];
+// 'products' will now be the array of products, not the wrapper object
+return (
+  <ul>
+    {products?.map(p => <li key={p.id}>{p.title}</li>)}
+  </ul>
+);
 ```
 
-## Custom Fetch Options
+## Parallel Fetching with `.map()`
 
-You can pass standard `fetch` options as the second argument.
+`fetch-qwery` makes it incredibly simple to fetch multiple resources at once. Just pass an **array of URLs**. You can then safely destructure the results or map over them.
+
+### Destructuring
+```tsx
+const { data, isLoading } = useFetch([
+  'https://dummyjson.com/users/1',
+  'https://dummyjson.com/products/1'
+]);
+
+const [user, product] = data || [];
+```
+
+### Mapping over multiple resources
+If you fetch a list of related items, you can map over the `data` array just like any other JavaScript array:
 
 ```tsx
-const { data } = useFetch('https://api.example.com/data', {
-  method: 'POST',
-  body: JSON.stringify({ key: 'value' }),
+const { data: posts } = useFetch([
+  'https://dummyjson.com/posts/1',
+  'https://dummyjson.com/posts/2',
+  'https://dummyjson.com/posts/3'
+]);
+
+return (
+  <div>
+    {posts?.map((post, index) => (
+      <div key={index}>
+        <h3>{post.title}</h3>
+      </div>
+    ))}
+  </div>
+);
+```
+
+## Hook Options
+
+The second argument to `useFetch` is an options object that allows you to customize the behavior of the request:
+
+| Option | Type | Description |
+| :--- | :--- | :--- |
+| `select` | `(data) => TData` | A function to transform or "pick" data from the response. |
+| `baseUrl` | `string` | A base URL to prepend to all your request paths. |
+| `staleTime` | `number` | How long (in ms) before the data is considered old and needs refetching. |
+| `headers` | `Record<string, string>` | Custom HTTP headers to include with every request. |
+| `method` | `string` | The HTTP method to use (e.g., `'GET'`, `'POST'`, `'PUT'`). |
+| `body` | `any` | The request body (automatically stringified if it's an object). |
+| `enabled` | `boolean` | Set to `false` to prevent the request from running automatically. |
+| `preloadImages`| `boolean` | Whether to scan for and preload images found in the data (default: `true`). |
+
+### Example using multiple options:
+
+```tsx
+const { data } = useFetch('products/search?q=phone', {
+  baseUrl: 'https://dummyjson.com',
+  staleTime: 60000, // 1 minute
+  select: (res) => res.products.slice(0, 3), // Get first 3 products
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Authorization': 'Bearer my-token'
+  }
 });
 ```
 
 ## Type Safety
 
-`fetch-qwery` is built with TypeScript and supports generics for full type safety.
+`fetch-qwery` is built with TypeScript and supports generics for full type safety. The hook accepts three generic parameters: `T` (raw response), `E` (error type), and `TData` (transformed data type).
 
 ```tsx
 interface User {
-  id: string;
-  name: string;
+  id: number;
+  firstName: string;
 }
 
-const { data } = useFetch<User>('/api/user');
+const { data } = useFetch<User>('https://dummyjson.com/users/1');
 // data is typed as User | undefined
+
+// With transformation (fetching products but selecting only titles)
+const { data: titles } = useFetch<{products: any[]}, Error, string[]>('https://dummyjson.com/products', {
+  select: (res) => res.products.map(p => p.title)
+});
+// titles is typed as string[] | undefined
 ```

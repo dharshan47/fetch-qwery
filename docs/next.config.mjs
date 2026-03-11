@@ -21,6 +21,9 @@ const config = {
       "fumadocs-ui",
     ],
   },
+  turbo: {
+    root: 'P:/Dharshan/npm-package/fetch-qwery/docs',
+  },
   async headers() {
     return [
       {

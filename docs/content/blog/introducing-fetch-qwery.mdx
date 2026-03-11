@@ -23,12 +23,12 @@ Most fetching libraries require providers, complex setup, or add significant wei
 import { useFetch } from 'fetch-qwery';
 
 function MyComponent() {
-  const { data, loading, error } = useFetch('https://api.example.com/data');
+  const { data: quote, loading, error } = useFetch('https://dummyjson.com/quotes/1');
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading quote...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <div>{quote?.quote}</div>;
 }
 ```
 

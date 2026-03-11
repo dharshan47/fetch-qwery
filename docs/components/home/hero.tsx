@@ -24,7 +24,7 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-foreground opacity-75"></span>
               <span className="relative inline-flex rounded-none h-3 w-3 bg-foreground"></span>
             </span>
-            Now optimized for React 19 & Next.js 15
+            Now optimized for React 19 & Next.js 16
           </div>
 
           <h1 className="animate-fade-up delay-1 text-5xl font-black tracking-tighter sm:text-7xl md:text-9xl mb-8 uppercase text-foreground leading-[0.85] text-glow">

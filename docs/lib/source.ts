@@ -14,6 +14,13 @@ export const blog = loader({
   source: blogCollection.toFumadocsSource(),
 });
 
+export function generateStaticParams() {
+  return source.getPages().map((page: InferPageType<typeof source>) => ({
+    lang: page.locale,
+    slug: getPageImage(page).segments,
+  }));
+}
+
 export function getPageImage(page: InferPageType<typeof source>) {
   const segments = [...page.slugs, 'image.png'];
 
@@ -24,9 +31,8 @@ export function getPageImage(page: InferPageType<typeof source>) {
 }
 
 export async function getLLMText(page: InferPageType<typeof source>) {
-  const processed = await page.data.getText('processed');
+  // @ts-ignore
+  const processed = await page.data.getText?.('processed') ?? '';
 
-  return `# ${page.data.title}
-
-${processed}`;
+  return `# ${page.data.title}\n\n${processed}`;
 }

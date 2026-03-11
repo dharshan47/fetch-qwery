@@ -2,6 +2,7 @@ import TestFetch from "../components/TestFetch";
 import LocalhostTest from "../components/LocalhostTest";
 import ImagePreloadTest from "../components/ImagePreloadTest";
 import SSRFetchTest from "../components/SSRFetchTest";
+import ParallelFetch from "../components/ParallelFetch";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-2">
           <TestFetch />
+          <ParallelFetch />
           <LocalhostTest />
           <ImagePreloadTest />
           <SSRFetchTest />
@@ -27,7 +29,7 @@ export default function Home() {
               <span className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">
                 ✓
               </span>
-              Any API Support (JSONPlaceholder)
+              Any API Support (DummyJSON)
             </li>
             <li className="flex items-center gap-2">
               <span className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">

@@ -18,29 +18,38 @@ export function Footer() {
             </div>
           </div>
           
-          <div className="space-y-6">
-            <h3 className="font-black uppercase tracking-widest text-xs">Resources</h3>
-            <ul className="space-y-4 text-muted-foreground text-sm font-medium">
-              <li><Link href="/docs" className="hover:text-primary transition-colors">Documentation</Link></li>
-              <li><Link href="/docs/guides" className="hover:text-primary transition-colors">Guides</Link></li>
-              <li><Link href="/docs/api" className="hover:text-primary transition-colors">API Reference</Link></li>
-            </ul>
-          </div>
-          
-          <div className="space-y-6">
-            <h3 className="font-black uppercase tracking-widest text-xs">Product</h3>
-            <ul className="space-y-4 text-muted-foreground text-sm font-medium">
-              <li><Link href="#" className="hover:text-primary transition-colors">Changelog</Link></li>
-            </ul>
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="font-black uppercase tracking-widest text-xs">Support</h3>
-            <ul className="space-y-4 text-muted-foreground text-sm font-medium">
-              <li><Link href="#" className="hover:text-primary transition-colors">GitHub Discussions</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Discord</Link></li>
-            </ul>
-          </div>
+          {[
+            {
+              title: "Resources",
+              links: [
+                { text: "Documentation", href: "/docs" },
+                { text: "Guides", href: "/docs/guides" },
+                { text: "API Reference", href: "/docs/api" },
+              ],
+            },
+            {
+              title: "Product",
+              links: [
+                { text: "Changelog", href: "#" },
+              ],
+            },
+            {
+              title: "Support",
+              links: [
+                { text: "GitHub Discussions", href: "#" },
+                { text: "Discord", href: "#" },
+              ],
+            },
+          ].map((section, idx) => (
+            <div key={idx} className="space-y-6">
+              <h3 className="font-black uppercase tracking-widest text-xs">{section.title}</h3>
+              <ul className="space-y-4 text-muted-foreground text-sm font-medium">
+                {section.links.map((link, lidx) => (
+                  <li key={lidx}><Link href={link.href} className="hover:text-primary transition-colors">{link.text}</Link></li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
         
         <div className="pt-12 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground font-semibold">

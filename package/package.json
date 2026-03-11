@@ -1,6 +1,6 @@
 {
   "name": "fetch-qwery",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "The high-performance, lightweight data fetching solution for React and Next.js. Features intelligent caching, SWR, race-condition protection, and flicker-free UI updates.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -17,13 +17,13 @@
     "README.md",
     "LICENSE"
   ],
-  "homepage": "https://github.com/dharshan-m/fetch-qwery#readme",
+  "homepage": "https://fetch-qwery.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dharshan-m/fetch-qwery.git"
+    "url": "git+https://github.com/dharshan47/fetch-qwery.git"
   },
   "bugs": {
-    "url": "https://github.com/dharshan-m/fetch-qwery/issues"
+    "url": "https://github.com/dharshan47/fetch-qwery/issues"
   },
   "keywords": [
     "react",
@@ -63,7 +63,6 @@
     "lint": "tsc --noEmit",
     "test": "cd .. && vitest run test",
     "test:watch": "cd .. && vitest test",
-
     "prepublishOnly": "npm run build"
   }
 }

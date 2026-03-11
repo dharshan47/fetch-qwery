@@ -7,7 +7,7 @@ import { discoverAssets, preloadImages } from "../utils/images";
  * Ultra-performance data fetching hook with automatic prefetching.
  * Supports: Any API, Localhost, Parallel Fetching, Base URLs.
  */
-export function useFetch<T = any, E = Error>(
+export function useFetch<T = any, E = Error, TData = T>(
   input: string | string[] | (() => Promise<T>),
   opt: {
     key?: any;
@@ -22,6 +22,7 @@ export function useFetch<T = any, E = Error>(
     headers?: HeadersInit;
     method?: string;
     body?: any;
+    select?: (data: T) => TData;
   } = {},
 ) {
   let client: any;
@@ -56,9 +57,9 @@ export function useFetch<T = any, E = Error>(
     };
 
     if (Array.isArray(input)) {
-      return () => Promise.all(input.map(fetcher));
+      return () => Promise.all(input.map(fetcher)) as Promise<T>;
     }
-    return () => fetcher(input);
+    return () => fetcher(input) as Promise<T>;
   }, [input, opt.baseUrl, opt.method, opt.headers, opt.body]);
 
   const queryKey = useMemo(
@@ -66,7 +67,7 @@ export function useFetch<T = any, E = Error>(
     [opt.key, input],
   );
 
-  const q = useQuery<T, E>(
+  const q = useQuery<T, E, TData>(
     {
       queryKey,
       queryFn,
@@ -75,6 +76,7 @@ export function useFetch<T = any, E = Error>(
       retry: opt.retry,
       placeholderData: opt.keepPreviousData ? (p: any) => p : undefined,
       enabled: opt.enabled,
+      select: opt.select,
     },
     client,
   );

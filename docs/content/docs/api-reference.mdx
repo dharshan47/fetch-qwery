@@ -11,25 +11,40 @@ The primary hook for fetching data.
 
 ### Parameters
 
-- `url`: `string | string[]`
+- `url`: `string | string[] | (() => Promise<T>)`
   - A single string URL for one request.
   - An array of string URLs for parallel fetching.
-- `options`: `RequestInit` (Optional)
-  - Standard `fetch` options (method, headers, body, etc.).
+  - A custom async function that returns data.
+- `options`: `Object` (Optional)
+  - `baseUrl`: `string` - Base URL for all requests.
+  - `headers`: `HeadersInit` - Custom headers.
+  - `method`: `string` - HTTP method (default: `GET`).
+  - `body`: `any` - Request body.
+  - `select`: `(data: T) => TData` - Transform data before it's returned.
+  - `staleTime`: `number` - Time in ms before data is considered stale.
+  - `gcTime`: `number` - Time in ms before unused data is garbage collected.
+  - `enabled`: `boolean` - Set to `false` to disable automatic fetching.
+  - `preloadImages`: `boolean` - Automatically preload images found in the data (default: `true`).
+  - `autoPrefetch`: `boolean` - Automatically prefetch links found in the data (default: `true`).
 
 ### Return Value
 
-The hook returns an object containing everything you need to manage the request state, powered by TanStack Query.
+The hook returns an object containing the request state and helper functions.
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
-| `data` | `T \| undefined` | The fetched data. An array of results if multiple URLs were provided. |
+| `data` | `TData \| undefined` | The fetched (and transformed) data. |
+| `loading` | `boolean` | Alias for `isLoading`. |
 | `isLoading` | `boolean` | True if the request is in progress. |
 | `isError` | `boolean` | True if the request failed. |
-| `error` | `Error \| null` | The error object if the request failed. |
-| `isSuccess` | `boolean` | True if the request completed successfully. |
-| `refetch` | `Function` | Function to manually trigger a refetch. |
+| `error` | `E \| null` | The error object if the request failed. |
+| `prefetch` | `(url?: string) => Promise<void>` | Manually trigger prefetching of a URL. |
+| `...rest` | `Object` | All other properties from TanStack Query's `useQuery`. |
 
-### Advanced Options
+### Advanced Features
 
-Under the hood, `fetch-qwery` manages its own query state. This allows for automatic deduplication and caching across different components without requiring a `QueryClientProvider`.
+#### Intelligent Image Preloading
+`fetch-qwery` automatically scans your JSON response for image URLs and preloads them in the background, ensuring a smooth visual experience.
+
+#### Localhost Optimization
+During development (`localhost`), `fetch-qwery` defaults to a 5-second `staleTime` to reduce unnecessary network noise while you work.
